@@ -1,0 +1,31 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: oooo
+      MYSQL_DATABASE: db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  springbatch:
+    image: springbatch_image:latest # Nom de l'image de votre application Spring Boot
+    container_name: springbatch_container
+    build:
+      context: . # Chemin vers votre Dockerfile
+    depends_on:
+      - mysql
+    environment:
+      SPRING_APPLICATION_NAME: springbatch
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: oooo
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:
