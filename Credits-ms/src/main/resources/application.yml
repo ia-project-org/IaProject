@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: Credits-ms
+
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      label: feat/ai-10-set-up-the-server-config

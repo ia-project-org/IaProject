@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Clients-ms
+  profiles:
+    active: default # Vérifiez le profil actif
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      label: feat/ai-10-set-up-the-server-config
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'refresh' # Assurez-vous que le endpoint /refresh est exposé

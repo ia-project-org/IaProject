@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: Clients-ms
+            uri: lb://CLIENTS-MS
+            predicates:
+              - Path=/clients/**
+          - id: Credits-ms
+            uri: lb://CREDITS-MS
+            predicates:
+              - Path=/credits/**
+          - id: Eligibility-ms
+            uri: lb://ELIGIBILITY-MS
+            predicates:
+              - Path=/eligibility/**
+
+server:
+  port: 9004
+eureka:
+  client:
+    region: default
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
