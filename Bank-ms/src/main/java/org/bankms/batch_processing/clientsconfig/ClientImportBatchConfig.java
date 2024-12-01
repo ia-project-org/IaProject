@@ -1,4 +1,4 @@
-package org.bankms.clientsms.batch_processing.config;
+package org.bankms.batch_processing.clientsconfig;
 
 
 import lombok.RequiredArgsConstructor;
@@ -18,30 +18,27 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import static org.bankms.batch_processing.utlis.Utils.createItemReader;
 
 @Configuration
 @RequiredArgsConstructor
-public class ImportBatchConfig {
+public class ClientImportBatchConfig {
 
     private final ClientRepository clientRepository;
     private final PlatformTransactionManager platformTransactionManager;
     private final JobRepository jobRepository;
-    private final TaskExecutor taskExecutor;
 
     @Bean
-    public FlatFileItemReader<Client> itemReader() {
-        FlatFileItemReader<Client> itemReader = new FlatFileItemReader<>();
-        itemReader.setResource(new FileSystemResource("C:\\Users\\HP\\IaProject\\Clients-ms\\src\\main\\resources\\clients_import.csv"));
-        itemReader.setName("csvReader");
-        itemReader.setLinesToSkip(1);
+    public FlatFileItemReader<Client> ClientItemReader() {
+        FlatFileItemReader<Client> itemReader = createItemReader("src/main/resources/clients.csv","ClientItemReader");
         itemReader.setLineMapper(lineMapper());
         return itemReader;
     }
 
     @Bean
-    public RepositoryItemWriter<Client> writer() {
+    public RepositoryItemWriter<Client> ClientWriter() {
         RepositoryItemWriter<Client> writer = new RepositoryItemWriter<>();
         writer.setRepository(clientRepository);
         writer.setMethodName("save");
@@ -49,25 +46,24 @@ public class ImportBatchConfig {
     }
 
     @Bean
-    public ClientProcessor processor() {
+    public ClientProcessor Clientprocessor() {
         return new ClientProcessor();
     }
 
     @Bean
-    public Step importStep() {
-        return new StepBuilder("csvImport", jobRepository)
+    public Step ClientimportStep() {
+        return new StepBuilder("importClientsStep", jobRepository)
                 .<Client, Client>chunk(10, platformTransactionManager)
-                .reader(itemReader())
-                .processor(processor())
-                .writer(writer())
-                .taskExecutor(taskExecutor)
+                .reader(ClientItemReader())
+                .processor(Clientprocessor())
+                .writer(ClientWriter())
                 .build();
     }
 
-    @Bean(name = "rubJob")
-    public Job rubJob() {
-        return new JobBuilder("tsImport", jobRepository)
-                .start(importStep())
+    @Bean(name = "importClientsJob")
+    public Job ClientrubJob() {
+        return new JobBuilder("importClientsJob", jobRepository)
+                .start(ClientimportStep())
                 .build();
     }
 

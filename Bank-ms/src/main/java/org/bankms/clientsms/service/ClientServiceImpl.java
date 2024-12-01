@@ -33,6 +33,12 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
+    public Page<ClientDetails> getClientsDetails(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return clientDetailsRepository.findAll(pageable);
+    }
+
+    @Override
     public Optional<Client> getClient(Long clientId) {
         return clientRepository.findById(clientId);
     }

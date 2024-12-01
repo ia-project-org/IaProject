@@ -1,4 +1,4 @@
-package org.bankms.clientsms.batch_processing.Scheduled;
+package org.bankms.batch_processing.Scheduled;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -15,14 +15,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ScheduledExportTask {
 
-    private final JobLauncher jobLauncher;
+    //private final JobLauncher jobLauncher;
 
-    private final Job exportJob;
+    //private final Job clients-exportJob;
 
+    /*
     @Scheduled(cron = "0 35 18 * * ?")
     public void stertjob () throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
-        jobLauncher.run(exportJob,new JobParameters());
+        jobLauncher.run(clients,new JobParameters());
     }
-
+    */
 }
 

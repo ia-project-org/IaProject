@@ -13,6 +13,8 @@ public interface ClientService {
 
     Page<Client> getClients(int page, int size);
 
+    Page<ClientDetails> getClientsDetails(int page, int size);
+
     Optional<Client> getClient(Long clientId);
 
     Client updateClient(ClientDto clientDto,Long clientId);

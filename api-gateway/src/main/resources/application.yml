@@ -8,9 +8,9 @@ spring:
           - id: Bank-ms
             uri: lb://BANK-MS
             predicates:
-              - Path=/bank/**
+              - Path=/clients/**
           - id: IaModel-ms
-            uri: http://127.0.0.1:8000
+            uri: lb://IAMODEL-MS
             predicates:
               - Path=/api/predict/**
           - id: Eligibility-ms

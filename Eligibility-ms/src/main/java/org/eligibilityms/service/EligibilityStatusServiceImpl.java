@@ -13,8 +13,14 @@ public class EligibilityStatusServiceImpl implements EligibilityStatusService{
 
     private final EligibilityStatusRepository eligibilityStatusRepository;
 
+    /**
+     * save client eligibility result in the database
+     * @param result
+     * @param clientId
+     * @return
+     */
     @Override
-    public EligibilityStatus updateClientStatus(String result, Long clientId) {
+    public EligibilityStatus saveClientStatus(String result, Long clientId) {
         return eligibilityStatusRepository.save(
                 EligibilityStatus.builder()
                         .eligibilityResult(result)
@@ -24,8 +30,13 @@ public class EligibilityStatusServiceImpl implements EligibilityStatusService{
         );
     }
 
+    /**
+     * get the eligibility status for a single client
+     * @param clientId
+     * @return
+     */
     @Override
-    public EligibilityStatus getClientStatus(Long clientId) {
+    public EligibilityStatus getClientEligibilityStatus(Long clientId) {
         return eligibilityStatusRepository.findEligibilityStatusByClientId(clientId);
     }
 }

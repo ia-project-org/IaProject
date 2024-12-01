@@ -4,8 +4,18 @@ import org.eligibilityms.model.EligibilityStatus;
 
 public interface EligibilityStatusService {
 
-    EligibilityStatus updateClientStatus(String result,Long clientId);
+    /**
+     * save client eligibility result in the database
+     * @param clientId
+     * @return
+     */
+    EligibilityStatus saveClientStatus(String result, Long clientId);
 
-    EligibilityStatus getClientStatus(Long clientId);
+    /**
+     * get the eligibility status for a single client
+     * @param clientId
+     * @return
+     */
+    EligibilityStatus getClientEligibilityStatus(Long clientId);
 
 }

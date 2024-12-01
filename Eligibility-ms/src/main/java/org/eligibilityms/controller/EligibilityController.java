@@ -1,65 +1,49 @@
 package org.eligibilityms.controller;
 
+import com.jayway.jsonpath.JsonPath;
 import lombok.RequiredArgsConstructor;
-import org.eligibilityms.dto.ClientDto;
-import org.eligibilityms.model.EligibilityStatus;
-import org.eligibilityms.proxy.ClientsMsProxy;
+import org.eligibilityms.proxy.BankMsProxy;
+import org.eligibilityms.proxy.IaModelMsProxy;
 import org.eligibilityms.service.EligibilityStatusService;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/eligibility")
 public class EligibilityController {
 
-    private final ClientsMsProxy clientsMsProxy;
+    private final BankMsProxy clientsMsProxy;
+
+    private final IaModelMsProxy iaModelMsProxy;
 
     private final EligibilityStatusService eligibilityStatusService;
 
-    private final RestTemplate restTemplate;
-
-    private static final String DJANGO_BASE_URL = "http://127.0.0.1:8000/api/predict/";
-
-    @GetMapping
-    public List<ClientDto> getClientsList(){
-        return clientsMsProxy.getClientsList();
+    /**
+     * get the eligibility status for a single client
+     *
+     * @param clientId
+     * @return
+     */
+    @GetMapping("/{clientId}")
+    public ResponseEntity<?> getClientEligibilityStatus(@PathVariable("clientId") Long clientId) {
+        return ResponseEntity.ok().body(eligibilityStatusService.getClientEligibilityStatus(clientId));
     }
 
-    @GetMapping("ok")
-    public ResponseEntity<?> getClientsList1(){
-        return clientsMsProxy.getClientsList1();
-    }
+    /**
+     * evaluate client eligibility and save the result in the database
+     *
+     * @param clientId
+     * @return
+     */
     @PostMapping("/{clientId}")
-    public ResponseEntity<?> evaluateClientEligibility(
-            @PathVariable("clientId") Long clientId
-    ){
-        // Appel POST à l'endpoint Django
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+    public ResponseEntity<?> evaluateClientEligibility(@PathVariable("clientId") Long clientId) {
 
-        HttpEntity<Object> request = new HttpEntity<>(clientsMsProxy.getClientDetails(clientId), headers);
-
-        try {
-            ResponseEntity<String> response = restTemplate.postForEntity(
-                    DJANGO_BASE_URL,
-                    request,
-                    String.class
-            );
-            return response;
-        } catch (RestClientException e) {
-            // Handle potential connection or request errors
-            throw new RuntimeException("Error sending POST request", e);
-        }
-       //return ResponseEntity.ok().body(restTemplate.postForEntity(DJANGO_BASE_URL,clientsMsProxy.getClientDetails(clientId),String.class));
-        //return ResponseEntity.ok().body(clientsMsProxy.getClientDetails(clientId));
+        String creditScore = JsonPath.parse(
+                        iaModelMsProxy.evaluateClientEligibility(
+                                clientsMsProxy.getClientDetails(clientId)).getBody())
+                .read("$.credit_score");
+        eligibilityStatusService.saveClientStatus(creditScore, clientId);
+        return ResponseEntity.ok().body(creditScore);
     }
 }

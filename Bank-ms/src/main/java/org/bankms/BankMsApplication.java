@@ -13,9 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients("org.bankms")
 @EnableConfigurationProperties
 public class BankMsApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BankMsApplication.class, args);
 	}
-
 }
