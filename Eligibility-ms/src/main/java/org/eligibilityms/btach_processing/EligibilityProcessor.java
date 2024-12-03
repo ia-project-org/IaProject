@@ -4,10 +4,10 @@ import com.jayway.jsonpath.JsonPath;
 import org.eligibilityms.dto.ClientDetailsDto;
 import org.eligibilityms.model.EligibilityStatus;
 import org.eligibilityms.proxy.IaModelMsProxy;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
 import java.util.Date;
-
 public class EligibilityProcessor implements ItemProcessor<ClientDetailsDto,EligibilityStatus> {
 
     private final IaModelMsProxy iaModelMsProxy;

@@ -7,8 +7,8 @@ import org.eligibilityms.proxy.BankMsProxy;
 import org.eligibilityms.proxy.IaModelMsProxy;
 import org.eligibilityms.repository.EligibilityStatusRepository;
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -19,6 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableBatchProcessing
 public class EligibilityBtachConfig {
 
     private final JobRepository jobRepository;
@@ -51,12 +52,13 @@ public class EligibilityBtachConfig {
    }
 
    @Bean(name = "EligibilityStep")
-    public Step EligibilityStep(){
+    public Step EligibilityStep(BankMsProxy bankMsProxy){
        return new StepBuilder("EligibilityStep",jobRepository)
                 .<ClientDetailsDto, EligibilityStatus>chunk( getChunkSize(), platformTransactionManager)
                 .reader(clientDetailsReader(bankMsProxy))
                 .processor(clientEligibilityProcessor())
                 .writer(clientEligibilityWriter())
+                .allowStartIfComplete(true)
                 .build();
    }
 
@@ -64,14 +66,13 @@ public class EligibilityBtachConfig {
    @Bean(name = "EligibilityJob")
    public Job EligibilityJob(){
        return new JobBuilder("ClientEligibilityJob",jobRepository)
-               .start(EligibilityStep())
-               .preventRestart()
+               .start(EligibilityStep(bankMsProxy))
                .build();
    }
 
-   public int getChunkSize(){
+    public int getChunkSize(){
        String value = System.getProperty("chunkSize");
-       return value != null ? Integer.parseInt(value) : 10;
+       return value != null ? Integer.parseInt(value) : 20;
    }
 
 }

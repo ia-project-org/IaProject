@@ -8,7 +8,7 @@ import org.springframework.batch.item.ItemReader;
 import java.util.Iterator;
 import java.util.List;
 
-@RequiredArgsConstructor
+
 public class FeignPagingItemReader implements ItemReader<ClientDetailsDto> {
 
     private final BankMsProxy bankMsProxy;
@@ -18,6 +18,11 @@ public class FeignPagingItemReader implements ItemReader<ClientDetailsDto> {
     private Iterator<ClientDetailsDto> currentDataIterator;
     private boolean isLastPage = false;
 
+    public FeignPagingItemReader(BankMsProxy bankMsProxy, int pageSize) {
+        this.bankMsProxy = bankMsProxy;
+        this.pageSize = pageSize;
+    }
+
 
     @Override
     public ClientDetailsDto read() {
@@ -26,7 +31,6 @@ public class FeignPagingItemReader implements ItemReader<ClientDetailsDto> {
         }
         return currentDataIterator != null && currentDataIterator.hasNext() ? currentDataIterator.next() : null;
     }
-
 
     private void fetchNextPage() {
         BankMsProxy.PaginatedResponse<ClientDetailsDto> response = bankMsProxy.getClientsDetailsList(currentPage, pageSize);

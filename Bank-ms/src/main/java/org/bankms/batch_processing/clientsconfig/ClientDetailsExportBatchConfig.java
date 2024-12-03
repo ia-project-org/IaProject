@@ -2,7 +2,7 @@ package org.bankms.batch_processing.clientsconfig;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
-import org.bankms.clientsms.model.Client;
+import org.bankms.clientsms.model.ClientDetails;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -19,37 +19,37 @@ import static org.bankms.batch_processing.utlis.Utils.createJpaPagingItemReader;
 
 @Configuration
 @RequiredArgsConstructor
-public class ClientExportBatchConfig {
+public class ClientDetailsExportBatchConfig {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
 
     @Bean
-    public JpaPagingItemReader<Client> clientDatabaseReader(EntityManagerFactory entityManagerFactory) {
-        return createJpaPagingItemReader(entityManagerFactory, "SELECT s FROM Client s", "ClientDatabaseReader");
+    public JpaPagingItemReader<ClientDetails> ClientDetailsDatabaseReader(EntityManagerFactory entityManagerFactory) {
+        return createJpaPagingItemReader(entityManagerFactory, "SELECT s FROM ClientDetails s", "ClientDetailsDatabaseReader");
     }
 
     @Bean
-    public FlatFileItemWriter<Client> clientCsvWriter() {
-        return createFlatFileItemWriter("src/main/resources/clients.csv",
+    public FlatFileItemWriter<ClientDetails> ClientDetailsCsvWriter() {
+        return createFlatFileItemWriter("src/main/resources/clientsDetails.csv",
                 new String[]{"id", "firstname", "lastname", "age"},
                 new String[]{"id", "firstname", "lastname", "age"});
 
     }
 
     @Bean
-    public Step exportClientsStep(EntityManagerFactory entityManagerFactory) {
-        return new StepBuilder("exportClientsStep", jobRepository)
-                .<Client, Client>chunk(10, platformTransactionManager)
-                .reader(clientDatabaseReader(entityManagerFactory))
-                .writer(clientCsvWriter())
+    public Step exportClientDetailssStep(EntityManagerFactory entityManagerFactory) {
+        return new StepBuilder("exportClientDetailssStep", jobRepository)
+                .<ClientDetails, ClientDetails>chunk(10, platformTransactionManager)
+                .reader(ClientDetailsDatabaseReader(entityManagerFactory))
+                .writer(ClientDetailsCsvWriter())
                 .build();
     }
 
-    @Bean(name = "exportClientsJob")
-    public Job exportClientsJob(EntityManagerFactory entityManagerFactory) {
-        return new JobBuilder("exportClientsJob", jobRepository)
-                .start(exportClientsStep(entityManagerFactory))
+    @Bean(name = "exportClientDetailssJob")
+    public Job exportClientDetailssJob(EntityManagerFactory entityManagerFactory) {
+        return new JobBuilder("exportClientDetailssJob", jobRepository)
+                .start(exportClientDetailssStep(entityManagerFactory))
                 .build();
     }
 }

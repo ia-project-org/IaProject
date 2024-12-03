@@ -1,6 +1,9 @@
 spring:
   application:
     name: Bank-ms
+  batch:
+    job:
+      enabled: true
   profiles:
     active: default
   cloud:
@@ -8,9 +11,3 @@ spring:
       uri: http://localhost:8888
       fail-fast: true
       label: feat/ai-10-set-up-the-server-config
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: 'refresh'

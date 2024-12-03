@@ -22,7 +22,7 @@ public class EligibityScheduled {
 
 
 
-    @Scheduled(cron = "0 */2 * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void startjob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addString("chunkSize", "20")  // Example value

@@ -20,7 +20,7 @@ public class EligibilityStatusServiceImpl implements EligibilityStatusService{
      * @return
      */
     @Override
-    public EligibilityStatus saveClientStatus(String result, Long clientId) {
+    public EligibilityStatus saveClientEligibilityStatus(String result, Long clientId) {
         return eligibilityStatusRepository.save(
                 EligibilityStatus.builder()
                         .eligibilityResult(result)
@@ -37,6 +37,6 @@ public class EligibilityStatusServiceImpl implements EligibilityStatusService{
      */
     @Override
     public EligibilityStatus getClientEligibilityStatus(Long clientId) {
-        return eligibilityStatusRepository.findEligibilityStatusByClientId(clientId);
+        return eligibilityStatusRepository.findLatestEligibilityStatusByClientId(clientId);
     }
 }

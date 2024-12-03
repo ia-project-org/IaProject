@@ -1,5 +1,6 @@
 package org.bankms.clientsms.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,13 +16,14 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientId;
-    private Long clientDetailsId;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
 
-
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "client")
+    @JsonManagedReference
+    private ClientDetails details;
 
     public Client() {
 

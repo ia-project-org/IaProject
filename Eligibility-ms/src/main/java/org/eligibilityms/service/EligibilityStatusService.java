@@ -9,7 +9,7 @@ public interface EligibilityStatusService {
      * @param clientId
      * @return
      */
-    EligibilityStatus saveClientStatus(String result, Long clientId);
+    EligibilityStatus saveClientEligibilityStatus(String result, Long clientId);
 
     /**
      * get the eligibility status for a single client
