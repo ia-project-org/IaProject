@@ -35,7 +35,7 @@ public class ClientsImportBatchConfig {
 
     private final JobRepository jobRepository;
 
-    public final static String file_path = "C:/Users/HP/IaProject/Bank-ms/src/main/resources/static/clientsDetails.csv";
+    public final static String file_path = "C:/Users/HP/backup/IaProject/Bank-ms/src/main/resources/static/clientsDetails.csv";
 
     @Bean
     public FlatFileItemReader<ClientCsvRecord> ClientItemReader() {

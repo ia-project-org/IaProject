@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/eligibility")
+@CrossOrigin("http://localhost:5173/")
 public class EligibilityController {
 
     private final BankMsProxy clientsMsProxy;

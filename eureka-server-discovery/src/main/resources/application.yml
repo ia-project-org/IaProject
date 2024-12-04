@@ -1,8 +1,14 @@
-spring:
-  application:
-    name: eureka-server-discovery
-  config:
-    import: configserver:http://localhost:8888
-  cloud:
-    config:
-      enabled: true
+server:
+  port: 8081
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone:
+        http://localhost:8081/eureka/
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    enable-self-preservation: false

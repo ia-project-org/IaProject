@@ -9,18 +9,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/ia-project-org/ia-project-server-config.git
-          username: Youssafouhba
-          password: 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
+          uri: https://github.com/ia-project-org/IaProject.git
           default-label: feat/ai-10-set-up-the-server-config
 
 server:
   port: 8888
-
-
-eureka:
-  client:
-    region: default
-    registry-fetch-interval-seconds: 5
-    service-url:
-      defaultZone: http://localhost:8081/eureka/

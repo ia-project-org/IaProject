@@ -25,7 +25,7 @@ import static org.bankms.batch_processing.clientsconfig.ClientsImportBatchConfig
 @RestController
 @RequestMapping("/clients")
 @RequiredArgsConstructor
-@RefreshScope
+@CrossOrigin("http://localhost:5173/")
 public class ClientController {
 
     private final JobLauncher jobLauncher;
@@ -47,10 +47,8 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<?> getPaginatedClients(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
-
-        //return ResponseEntity.ok(clientService.getClients(page,size).stream().toList().subList(0, propertiesConfiguration.getLimitDeProduits()));
-        return ResponseEntity.ok().body(new ArrayList<>().add(new Client()));
+            @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(clientService.getClients(page,size).stream());
     }
 
     @PostMapping
