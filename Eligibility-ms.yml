@@ -1,0 +1,6 @@
+server:
+  port: 9003
+
+product:
+  service:
+    message: "Bienvenue dans eligibility ms !"

@@ -1,0 +1,13 @@
+spring:
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
+
+server:
+  port: 9001
+
+product:
+  service:
+    message: "Bienvenue dans Bank ms !"
