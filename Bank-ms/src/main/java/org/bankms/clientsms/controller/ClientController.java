@@ -14,6 +14,7 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +39,7 @@ public class ClientController {
 
 
     @GetMapping("/details")
+    @PreAuthorize("hasRole('agent')")
     public ResponseEntity<?> getPaginatedClientsDetails(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size){
@@ -45,6 +47,7 @@ public class ClientController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('agent')")
     public ResponseEntity<?> getPaginatedClients(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -52,21 +55,25 @@ public class ClientController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('agent')")
     public Client saveClient(@RequestBody Client client){
         return clientService.saveClient(client);
     }
 
     @GetMapping("/{clientId}")
+    @PreAuthorize("hasRole('agent')")
     public ClientDetails getClientDetails(@PathVariable("clientId") Long clientId){
         return clientService.getClientDetails(clientId);
     }
 
     @PostMapping("/details")
+    @PreAuthorize("hasRole('agent')")
     public ResponseEntity<?> saveClientDetails(@RequestBody ClientDetails clientDetails){
         return ResponseEntity.ok().body(clientService.saveClientDetails(clientDetails));
     }
 
     @PostMapping("/import")
+    @PreAuthorize("hasRole('agent')")
     public ResponseEntity<?> importClients() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         jobLauncher.run(importClientJob,new JobParametersBuilder()
                 .addString("timestamp", String.valueOf(System.currentTimeMillis())) // Unique parameter
@@ -75,6 +82,7 @@ public class ClientController {
     }
 
     @PostMapping("/import-csv")
+    @PreAuthorize("hasRole('agent')")
     public ResponseEntity<String> importCsv(@RequestParam("file") MultipartFile file) throws Exception {
         file.transferTo(new File(file_path));
         jobLauncher.run(importClientJob, new JobParametersBuilder()

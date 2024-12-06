@@ -18,6 +18,24 @@ spring:
             predicates:
               - Path=/eligibility/**
 
+    globalcors:
+      corsConfigurations:
+        '[/**]':
+          allowedOrigins: "http://localhost:5173"
+          allowedHeaders: "*"
+          allowedMethods:
+              - GET
+              - POST
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9999/realms/e-banking
+            #          on peut le recuperer depuis ce lien
+            #  http://localhost:9000/realms/Zaineb_Majdi/.well-known/openid-configuration
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
 server:
   port: 9004
 eureka:
@@ -26,3 +44,9 @@ eureka:
     registry-fetch-interval-seconds: 5
     service-url:
       defaultZone: http://localhost:8081/eureka/
+
+jwt:
+  auth:
+    converter:
+      resource-id: e-banking-rest-api
+      principle-attribute: preferred_username

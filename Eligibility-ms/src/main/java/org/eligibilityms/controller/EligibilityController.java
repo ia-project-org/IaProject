@@ -11,6 +11,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,6 +33,7 @@ public class EligibilityController {
      * @return
      */
     @GetMapping("/{clientId}")
+    @PreAuthorize("hasRole('agent')")
     public ResponseEntity<?> getClientEligibilityStatus(@PathVariable("clientId") Long clientId) {
         return ResponseEntity.ok().body(eligibilityStatusService.getClientEligibilityStatus(clientId));
     }
@@ -43,6 +45,7 @@ public class EligibilityController {
      * @return
      */
     @PostMapping("/{clientId}")
+    @PreAuthorize("hasRole('agent')")
     public ResponseEntity<?> evaluateClientEligibility(@PathVariable("clientId") Long clientId) {
 
         String creditScore = JsonPath.parse(

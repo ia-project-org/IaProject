@@ -8,6 +8,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -23,6 +24,7 @@ public class CreditController {
     //private final Job rubJob;
 
     @GetMapping
+    @PreAuthorize("hasRole('agent')")
     public ResponseEntity<Page<Credit>> getcredits(@RequestParam(defaultValue = "0") int page,
                                                  @RequestParam(defaultValue = "10") int size){
       /*   try{
@@ -34,6 +36,7 @@ public class CreditController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('agent')")
     public Credit addCredit(@RequestBody Credit credit){
         return creditService.saveCredit(credit);
     }
