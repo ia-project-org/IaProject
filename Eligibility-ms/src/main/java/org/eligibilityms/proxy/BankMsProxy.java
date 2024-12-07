@@ -23,7 +23,7 @@ public interface BankMsProxy {
     /**
      * get client details from the bank service
      */
-    @GetMapping(value = "/clients/{clientId}")
+    @GetMapping(value = "/clients/details/{clientId}")
     ClientDetailsDto getClientDetails(@PathVariable Long clientId);
 
     /**
