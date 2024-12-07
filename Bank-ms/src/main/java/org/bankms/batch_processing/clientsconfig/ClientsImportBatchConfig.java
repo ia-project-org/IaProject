@@ -78,7 +78,7 @@ public class ClientsImportBatchConfig {
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer(DelimitedLineTokenizer.DELIMITER_COMMA);
 
         lineTokenizer.setNames(
-                "firstName","lastName","email","phoneNumber","month", "age", "annual_income", "monthly_inhand_salary", "total_emi_per_month",
+                "firstName","lastName","email","phoneNumber","cin","month", "age", "annual_income", "monthly_inhand_salary", "total_emi_per_month",
                 "num_bank_accounts", "num_credit_card", "interest_rate", "num_of_loan",
                 "delay_from_due_date", "num_of_delayed_payment", "changed_credit_limit",
                 "num_credit_inquiries", "credit_mix", "outstanding_debt",

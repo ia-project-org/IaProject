@@ -20,8 +20,6 @@
 	</properties>
 
 	<modules>
-		<module>Bank-ms</module>
-		<module>Eligibility-ms</module>
 	</modules>
 
 	<dependencyManagement>

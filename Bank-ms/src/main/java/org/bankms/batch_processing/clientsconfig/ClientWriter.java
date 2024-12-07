@@ -25,13 +25,17 @@ public class ClientWriter implements ItemWriter<Client> {
     public void write(Chunk<? extends Client> clients) throws Exception {
         // Extracting the ClientDetails from the Client entities
         List<ClientDetails> clientDetailsList = new ArrayList<>();
+        List<Client> cliensList = new ArrayList<>();
         for (Client client : clients) {
-            ClientDetails clientDetails = client.getDetails();
-            clientDetailsList.add(clientDetails);
+            if(!clientRepository.existsByCinAndEmail(client.getCin(),client.getEmail())){
+                ClientDetails clientDetails = client.getDetails();
+                clientDetailsList.add(clientDetails);
+                cliensList.add(client);
+            }
         }
         // Save ClientDetails first
         clientDetailsRepository.saveAll(clientDetailsList);
         // Save the Client entities
-        clientRepository.saveAll(clients);
+        clientRepository.saveAll(cliensList);
     }
 }

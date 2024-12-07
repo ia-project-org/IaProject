@@ -34,36 +34,11 @@ public class ClientController {
 
     private final ClientService clientService;
 
-    private final ApplicationPropertiesConfiguration propertiesConfiguration;
-
-
-    @GetMapping("/details")
-    public ResponseEntity<?> getPaginatedClientsDetails(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size){
-       return ResponseEntity.ok(clientService.getClientsDetails(page,size));
-    }
-
     @GetMapping
     public ResponseEntity<?> getPaginatedClients(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(clientService.getClients(page,size).stream());
-    }
-
-    @PostMapping
-    public Client saveClient(@RequestBody Client client){
-        return clientService.saveClient(client);
-    }
-
-    @GetMapping("/{clientId}")
-    public ClientDetails getClientDetails(@PathVariable("clientId") Long clientId){
-        return clientService.getClientDetails(clientId);
-    }
-
-    @PostMapping("/details")
-    public ResponseEntity<?> saveClientDetails(@RequestBody ClientDetails clientDetails){
-        return ResponseEntity.ok().body(clientService.saveClientDetails(clientDetails));
     }
 
     @PostMapping("/import")

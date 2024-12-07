@@ -11,7 +11,7 @@ public class ClientCsvRecord {
     private String lastName;
     private String email;
     private String phoneNumber;
-
+    private String cin;
 
     @JsonProperty("month")
     private Integer month;

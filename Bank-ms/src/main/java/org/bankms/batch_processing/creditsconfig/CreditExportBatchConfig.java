@@ -18,11 +18,15 @@ import static org.bankms.batch_processing.utlis.Utils.createFlatFileItemWriter;
 import static org.bankms.batch_processing.utlis.Utils.createJpaPagingItemReader;
 
 @Configuration
-@RequiredArgsConstructor
 public class CreditExportBatchConfig {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
+
+    public CreditExportBatchConfig(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
+        this.jobRepository = jobRepository;
+        this.platformTransactionManager = platformTransactionManager;
+    }
 
     @Bean
     public JpaPagingItemReader<Credit> creditDatabaseReader(EntityManagerFactory entityManagerFactory) {

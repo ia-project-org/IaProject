@@ -6,6 +6,7 @@ import org.bankms.clientsms.model.ClientDetails;
 
 import static org.bankms.clientsms.mapper.ClientDetailsMapper.fromClientCsvRecordToClientDetails;
 
+
 public class ClientMapper {
 
     public static Client fromClientCsvRecordToClient(ClientCsvRecord record) {
@@ -18,6 +19,7 @@ public class ClientMapper {
                 .lastName(record.getLastName())
                 .email(record.getEmail())
                 .phoneNumber(record.getPhoneNumber())
+                .cin(record.getCin())
                 .details(details) // Set the ClientDetails
                 .build();
     }

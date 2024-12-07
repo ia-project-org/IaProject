@@ -18,8 +18,11 @@ public class Client {
     private Long clientId;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String phoneNumber;
+    @Column(unique = true)
+    private String cin;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "client")
     @JsonManagedReference

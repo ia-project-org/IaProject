@@ -3,6 +3,7 @@ package org.bankms.batch_processing.clientsconfig;
 
 
 import org.bankms.clientsms.dto.ClientCsvRecord;
+import org.bankms.clientsms.mapper.ClientMapper;
 import org.bankms.clientsms.model.Client;
 import org.bankms.clientsms.model.ClientDetails;
 import org.springframework.batch.item.ItemProcessor;
@@ -20,4 +21,5 @@ public class ClientProcessor implements ItemProcessor<ClientCsvRecord, Client> {
         clientDetails.setClient(client);
         return client;
     }
+
 }
