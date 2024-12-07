@@ -44,11 +44,6 @@ public class EligibilityController {
      */
     @PostMapping("/{clientId}")
     public ResponseEntity<?> evaluateClientEligibility(@PathVariable("clientId") Long clientId) {
-
-        String creditScore = JsonPath.parse(
-                        iaModelMsProxy.evaluateClientEligibility(
-                                clientsMsProxy.getClientDetails(clientId)).getBody())
-                .read("$.credit_score");
-        return ResponseEntity.ok().body(eligibilityStatusService.saveClientEligibilityStatus(creditScore, clientId));
+        return ResponseEntity.ok().body(eligibilityStatusService.evaluateClientEligibility(clientId));
     }
 }

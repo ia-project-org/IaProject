@@ -1,6 +1,7 @@
 package org.eligibilityms.service;
 
 import org.eligibilityms.model.EligibilityStatus;
+import org.springframework.http.ResponseEntity;
 
 public interface EligibilityStatusService {
 
@@ -17,5 +18,7 @@ public interface EligibilityStatusService {
      * @return
      */
     EligibilityStatus getClientEligibilityStatus(Long clientId);
+
+    ResponseEntity<EligibilityStatus> evaluateClientEligibility(Long clientId);
 
 }
