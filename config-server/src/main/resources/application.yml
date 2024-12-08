@@ -1,4 +1,9 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://pg-ai-credit-scoring-project-project22-2002.k.aivencloud.com:28624/defaultdb?sslmode=require
+    username: avnadmin
+    password: AVNS_iGYa-583_6rRE3zWRfe
+    driver-class-name: org.postgresql.Driver
   application:
     name: config-server
 
