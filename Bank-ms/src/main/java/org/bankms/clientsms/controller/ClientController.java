@@ -83,4 +83,10 @@ public class ClientController {
                         .toJobParameters());
         return ResponseEntity.ok("CSV imported successfully.");
     }
+
+    @GetMapping("/number")
+    public ResponseEntity<Long> getClientsNumber(){
+        long numberOfClients = clientService.getNumberOfClients();
+        return ResponseEntity.ok(numberOfClients);
+    }
 }

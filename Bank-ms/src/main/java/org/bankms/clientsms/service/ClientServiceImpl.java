@@ -66,4 +66,9 @@ public class ClientServiceImpl implements ClientService{
     public ClientDetails getClientDetails(Long clientId) {
         return clientDetailsRepository.findClientDetailsByClientId(clientId);
     }
+
+    @Override
+    public long getNumberOfClients() {
+        return clientRepository.count();
+    }
 }

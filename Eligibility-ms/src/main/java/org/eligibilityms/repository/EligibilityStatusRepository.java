@@ -12,4 +12,6 @@ public interface EligibilityStatusRepository extends JpaRepository<EligibilitySt
     @Query("SELECT e FROM EligibilityStatus e WHERE e.clientId = :clientId ORDER BY e.lastCheckedDate DESC LIMIT 1")
     EligibilityStatus findLatestEligibilityStatusByClientId(@Param("clientId") Long clientId);
 
+    @Query("SELECT count(e) FROM EligibilityStatus e WHERE e.eligibilityResult = :eligibilityResult")
+    Integer countByEligibilityResult(@Param("eligibilityResult") String eligibilityResult);
 }

@@ -18,4 +18,5 @@ public interface EligibilityStatusService {
      */
     EligibilityStatus getClientEligibilityStatus(Long clientId);
 
+    Integer countByEligibilityResult(String eligibilityResult);
 }

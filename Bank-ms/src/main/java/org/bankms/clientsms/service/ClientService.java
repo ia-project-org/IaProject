@@ -25,4 +25,5 @@ public interface ClientService {
 
     ClientDetails getClientDetails(Long clientId);
 
+    long getNumberOfClients();
 }

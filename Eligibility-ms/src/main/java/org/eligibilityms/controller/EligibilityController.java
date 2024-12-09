@@ -51,4 +51,34 @@ public class EligibilityController {
                 .read("$.credit_score");
         return ResponseEntity.ok().body(eligibilityStatusService.saveClientEligibilityStatus(creditScore, clientId));
     }
+
+    /**
+     * get the number of evaluated clients which have an eligibility status = "Good"
+     *
+     * @return
+     */
+    @GetMapping("/good-number")
+    public ResponseEntity<Integer> countGoodEligibility() {
+        return ResponseEntity.ok().body(eligibilityStatusService.countByEligibilityResult("Good"));
+    }
+
+    /**
+     * get the number of evaluated clients which have an eligibility status = "Standard"
+     *
+     * @return
+     */
+    @GetMapping("/standard-number")
+    public ResponseEntity<Integer> countStandardEligibility() {
+        return ResponseEntity.ok().body(eligibilityStatusService.countByEligibilityResult("Standard"));
+    }
+
+    /**
+     * get the number of evaluated clients which have an eligibility status = "Poor"
+     *
+     * @return
+     */
+    @GetMapping("/poor-number")
+    public ResponseEntity<Integer> countPoorEligibility() {
+        return ResponseEntity.ok().body(eligibilityStatusService.countByEligibilityResult("Poor"));
+    }
 }

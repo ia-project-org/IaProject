@@ -39,4 +39,9 @@ public class EligibilityStatusServiceImpl implements EligibilityStatusService{
     public EligibilityStatus getClientEligibilityStatus(Long clientId) {
         return eligibilityStatusRepository.findLatestEligibilityStatusByClientId(clientId);
     }
+
+    @Override
+    public Integer countByEligibilityResult(String eligibilityResult) {
+        return eligibilityStatusRepository.countByEligibilityResult(eligibilityResult);
+    }
 }
