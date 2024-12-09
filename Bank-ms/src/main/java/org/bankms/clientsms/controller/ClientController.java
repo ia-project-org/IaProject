@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
 import static org.bankms.batch_processing.clientsconfig.ClientsImportBatchConfig.file_path;
@@ -88,5 +90,28 @@ public class ClientController {
     public ResponseEntity<Long> getClientsNumber(){
         long numberOfClients = clientService.getNumberOfClients();
         return ResponseEntity.ok(numberOfClients);
+    }
+
+//    @GetMapping("/growth-percentage")
+//    public ResponseEntity<Double> getClientsGrowthPercentage(){
+//        LocalDateTime currentDateTime = LocalDateTime.now();
+//        LocalDateTime lastDayOfPreviousMonth = currentDateTime.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+//
+//        long numberOfClientsThisMonth = clientService.getNumberOfClients();
+//        System.out.println(numberOfClientsThisMonth);
+//        long numberOfClientsLastMonth = clientService.getNumberOfClients(lastDayOfPreviousMonth);
+//        System.out.println(numberOfClientsLastMonth);
+//
+//        double growthPercentage = ((double) (numberOfClientsThisMonth - numberOfClientsLastMonth) / numberOfClientsLastMonth) * 100;
+//        return ResponseEntity.ok(growthPercentage);
+//    }
+
+
+    @GetMapping("/number-previous-month")
+    public ResponseEntity<Long> getClientsNumberPreviousMonth(){
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime lastDayOfPreviousMonth = currentDateTime.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+
+        return ResponseEntity.ok(clientService.getNumberOfClients(lastDayOfPreviousMonth));
     }
 }

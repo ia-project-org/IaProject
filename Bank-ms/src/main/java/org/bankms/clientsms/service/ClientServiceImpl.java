@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -70,5 +71,10 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public long getNumberOfClients() {
         return clientRepository.count();
+    }
+
+    @Override
+    public long getNumberOfClients(LocalDateTime endDateTime) {
+        return clientRepository.countByCreatedAtLessThanEqual(endDateTime);
     }
 }

@@ -44,4 +44,9 @@ public class EligibilityStatusServiceImpl implements EligibilityStatusService{
     public Integer countByEligibilityResult(String eligibilityResult) {
         return eligibilityStatusRepository.countByEligibilityResult(eligibilityResult);
     }
+
+    @Override
+    public Integer countByEligibilityResult(String eligibilityResult, Date lastMonthDate) {
+        return eligibilityStatusRepository.countByEligibilityResultBeforeLastMonth(eligibilityResult, lastMonthDate);
+    }
 }

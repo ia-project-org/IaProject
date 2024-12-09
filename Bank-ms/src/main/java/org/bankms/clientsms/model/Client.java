@@ -6,12 +6,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +29,10 @@ public class Client {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "client")
     @JsonManagedReference
     private ClientDetails details;
+
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 
     public Client() {
 

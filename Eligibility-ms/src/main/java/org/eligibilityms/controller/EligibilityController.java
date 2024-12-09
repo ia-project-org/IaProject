@@ -2,16 +2,14 @@ package org.eligibilityms.controller;
 
 import com.jayway.jsonpath.JsonPath;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.eligibilityms.proxy.BankMsProxy;
 import org.eligibilityms.proxy.IaModelMsProxy;
 import org.eligibilityms.service.EligibilityStatusService;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.eligibilityms.util.DateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
@@ -63,6 +61,17 @@ public class EligibilityController {
     }
 
     /**
+     * get the number of previous month evaluated clients which have an eligibility status = "Good"
+     *
+     * @return
+     */
+    @GetMapping("/good-number-previous-month")
+    public ResponseEntity<Integer> countGoodEligibilityPreviousMonth() {
+        Date previousMonthDate = DateUtils.getPreviousMonthDate();
+        return ResponseEntity.ok().body(eligibilityStatusService.countByEligibilityResult("Good", previousMonthDate));
+    }
+
+    /**
      * get the number of evaluated clients which have an eligibility status = "Standard"
      *
      * @return
@@ -70,6 +79,17 @@ public class EligibilityController {
     @GetMapping("/standard-number")
     public ResponseEntity<Integer> countStandardEligibility() {
         return ResponseEntity.ok().body(eligibilityStatusService.countByEligibilityResult("Standard"));
+    }
+
+    /**
+     * get the number of previous month evaluated clients which have an eligibility status = "Standard"
+     *
+     * @return
+     */
+    @GetMapping("/standard-number-previous-month")
+    public ResponseEntity<Integer> countStandardEligibilityPreviousMonth() {
+        Date previousMonthDate = DateUtils.getPreviousMonthDate();
+        return ResponseEntity.ok().body(eligibilityStatusService.countByEligibilityResult("Standard", previousMonthDate));
     }
 
     /**
@@ -81,4 +101,16 @@ public class EligibilityController {
     public ResponseEntity<Integer> countPoorEligibility() {
         return ResponseEntity.ok().body(eligibilityStatusService.countByEligibilityResult("Poor"));
     }
+
+    /**
+     * get the number of previous month evaluated clients which have an eligibility status = "Poor"
+     *
+     * @return
+     */
+    @GetMapping("/poor-number-previous-month")
+    public ResponseEntity<Integer> countPoorEligibilityPreviousMonth() {
+        Date previousMonthDate = DateUtils.getPreviousMonthDate();
+        return ResponseEntity.ok().body(eligibilityStatusService.countByEligibilityResult("Poor", previousMonthDate));
+    }
+
 }
