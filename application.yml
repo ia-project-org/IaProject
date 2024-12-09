@@ -8,9 +8,9 @@ eureka:
 spring:
   datasource:
     driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/clientside}
-    username: ${SPRING_DATASOURCE_USERNAME:clientuserr}
-    password: ${SPRING_DATASOURCE_PASSWORD:AVNS_2s8LBE_oJIbedpG4lSx}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://pg-ai-credit-scoring-project-project22-2002.k.aivencloud.com:28624/defaultdb?sslmode=require}
+    username: ${SPRING_DATASOURCE_USERNAME:avnadmin}
+    password: ${SPRING_DATASOURCE_PASSWORD:AVNS_iGYa-583_6rRE3zWRfe}
   jpa:
     database-platform: ${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}
     hibernate:
