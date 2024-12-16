@@ -64,14 +64,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-         <!-- Datasource : Postgres -->
-         <dependency>
-             <groupId>org.postgresql</groupId>
-             <artifactId>postgresql</artifactId>
-             <version>42.7.4</version>
-         </dependency>
-
     </dependencies>
     <dependencyManagement>
         <dependencies>
