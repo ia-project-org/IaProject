@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS)) // JWT sans état
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/eureka/**").permitAll() // Autorise les requêtes vers `/eureka/**`
-                        .anyRequest().authenticated() // Authentifie toutes les autres requêtes
+                        .anyRequest().hasRole("Agent") // Authentifie toutes les autres requêtes
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter))
