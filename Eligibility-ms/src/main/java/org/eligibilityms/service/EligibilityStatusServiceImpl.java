@@ -49,16 +49,27 @@ public class EligibilityStatusServiceImpl implements EligibilityStatusService{
         if(eligibilityStatus==null){
             evaluateClientEligibility(clientId);
             return eligibilityStatusRepository.findLatestEligibilityStatusByClientId(clientId);
-        }
-        return eligibilityStatus;
+        }else
+            return eligibilityStatus;
     }
 
     @Override
     public ResponseEntity<EligibilityStatus> evaluateClientEligibility(Long clientId) {
         String creditScore = JsonPath.parse(
                         iaModelMsProxy.evaluateClientEligibility(
-                                clientsMsProxy.getClientDetails(clientId)).getBody())
+                                clientsMsProxy.getClientDetails(clientId)
+                        ).getBody())
                 .read("$.credit_score");
         return ResponseEntity.ok().body(saveClientEligibilityStatus(creditScore, clientId));
+    }
+
+    @Override
+    public Integer countByEligibilityResult(String eligibilityResult) {
+        return eligibilityStatusRepository.countUniqueClientsByEligibilityResult(eligibilityResult);
+    }
+
+    @Override
+    public Integer countByEligibilityResult(String eligibilityResult, Date lastMonthDate) {
+        return eligibilityStatusRepository.countUniqueEligibilityBeforeLastMonth(eligibilityResult, lastMonthDate);
     }
 }

@@ -7,6 +7,10 @@ public class ClientDetailsMapper {
 
     public static ClientDetails fromClientCsvRecordToClientDetails(ClientCsvRecord record) {
         return ClientDetails.builder()
+                .name(record.getFirstName() +' '+ record.getLastName())
+                .email(record.getEmail())
+                .ssn(record.getSsn())
+                .customerId(record.getCustomerId())
                 .month(record.getMonth())
                 .age(record.getAge())
                 .annualIncome(record.getAnnualIncome())
@@ -53,6 +57,7 @@ public class ClientDetailsMapper {
                 .occupationScientist(record.getOccupationScientist())
                 .occupationTeacher(record.getOccupationTeacher())
                 .occupationWriter(record.getOccupationWriter())
+                .creditScore(record.getCreditScore())
                 .build();
     }
 }

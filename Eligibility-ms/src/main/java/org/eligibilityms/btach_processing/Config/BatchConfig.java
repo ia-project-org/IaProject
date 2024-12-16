@@ -1,6 +1,11 @@
-package org.eligibilityms.btach_processing;
+package org.eligibilityms.btach_processing.Config;
 
 import lombok.RequiredArgsConstructor;
+import org.eligibilityms.btach_processing.Listener.EligibilityJobListener;
+import org.eligibilityms.btach_processing.Listener.RecommendationListener;
+import org.eligibilityms.btach_processing.Processor.EligibilityProcessor;
+import org.eligibilityms.btach_processing.Processor.RecommendationProcessor;
+import org.eligibilityms.btach_processing.Reader.FeignPagingItemReader;
 import org.eligibilityms.dto.ClientDetailsDto;
 import org.eligibilityms.model.EligibilityStatus;
 import org.eligibilityms.proxy.BankMsProxy;
@@ -20,7 +25,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 @RequiredArgsConstructor
 @EnableBatchProcessing
-public class EligibilityBtachConfig {
+public class BatchConfig {
 
     private final JobRepository jobRepository;
 
@@ -37,13 +42,17 @@ public class EligibilityBtachConfig {
         return new FeignPagingItemReader(clientFeignClient, getChunkSize()); // Taille du chunk
     }
 
-
     @Bean
     public EligibilityProcessor clientEligibilityProcessor(){
         return new EligibilityProcessor(iaModelMsProxy);
     }
 
-   @Bean
+    @Bean
+    public RecommendationProcessor creditsRecommendationProcessor(){
+        return new RecommendationProcessor(iaModelMsProxy);
+    }
+
+    @Bean
     public RepositoryItemWriter<EligibilityStatus> clientEligibilityWriter(){
        RepositoryItemWriter<EligibilityStatus> writer = new RepositoryItemWriter<EligibilityStatus>();
        writer.setRepository(eligibilityStatusRepository);
@@ -51,7 +60,8 @@ public class EligibilityBtachConfig {
        return writer;
    }
 
-   @Bean(name = "EligibilityStep")
+
+    @Bean(name = "EligibilityStep")
     public Step EligibilityStep(BankMsProxy bankMsProxy){
        return new StepBuilder("EligibilityStep",jobRepository)
                 .<ClientDetailsDto, EligibilityStatus>chunk( getChunkSize(), platformTransactionManager)
@@ -63,12 +73,33 @@ public class EligibilityBtachConfig {
    }
 
 
-   @Bean(name = "EligibilityJob")
-   public Job EligibilityJob(){
-       return new JobBuilder("ClientEligibilityJob",jobRepository)
-               .start(EligibilityStep(bankMsProxy))
-               .build();
-   }
+    @Bean(name = "RecommendationStep")
+    public Step RecommendationStep(BankMsProxy bankMsProxy){
+        return new StepBuilder("RecommendationStep",jobRepository)
+                .<ClientDetailsDto, EligibilityStatus>chunk( getChunkSize(), platformTransactionManager)
+                .reader(clientDetailsReader(bankMsProxy))
+                .processor(creditsRecommendationProcessor())
+                .writer(clientEligibilityWriter())
+                .allowStartIfComplete(true)
+                .build();
+    }
+
+
+    @Bean(name = "EligibilityJob")
+    public Job EligibilityJob(EligibilityJobListener eligibilityJobListener){
+        return new JobBuilder("ClientEligibilityJob",jobRepository)
+                .listener(eligibilityJobListener)
+                .start(EligibilityStep(bankMsProxy))
+                .build();
+    }
+
+    @Bean(name = "RecommendationJob")
+    public Job RecommendationJob(RecommendationListener recommendationListener){
+        return new JobBuilder("RecommendationJob",jobRepository)
+                .listener(recommendationListener)
+                .start(RecommendationStep(bankMsProxy))
+                .build();
+    }
 
     public int getChunkSize(){
        String value = System.getProperty("chunkSize");

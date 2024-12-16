@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 public class ClientDetailsDto {
     private Long clientId;
+    private String name;
+    private String email;
     private int month;
     private int age;
     private double annual_income;

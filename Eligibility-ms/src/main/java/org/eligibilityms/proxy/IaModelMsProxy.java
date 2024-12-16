@@ -1,6 +1,7 @@
 package org.eligibilityms.proxy;
 
 import org.eligibilityms.dto.ClientDetailsDto;
+import org.eligibilityms.dto.LoanDto;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,14 @@ public interface IaModelMsProxy {
     /***
     /* method to evaluate client eligibility from the ia model service
     ***/
-    @PostMapping("/api/predict/")
+    @PostMapping("/app/predict/")
     ResponseEntity<?> evaluateClientEligibility(
             @RequestBody ClientDetailsDto clientDetailsDto);
+
+    /***
+     /* method to recommend credits to eligible client
+     ***/
+    @PostMapping("/app/recommend/")
+    ResponseEntity<?> RecommendCreditsToClient(
+            @RequestBody LoanDto loanDto);
 }

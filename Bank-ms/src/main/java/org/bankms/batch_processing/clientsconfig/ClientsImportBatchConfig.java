@@ -58,7 +58,7 @@ public class ClientsImportBatchConfig {
     @Bean
     public Step ClientimportStep() {
         return new StepBuilder("importClientsStep", jobRepository)
-                .<ClientCsvRecord, Client>chunk(10, platformTransactionManager)
+                .<ClientCsvRecord, Client>chunk(50, platformTransactionManager)
                 .reader(ClientItemReader())
                 .processor(Clientprocessor())
                 .writer(Clientwriter())
@@ -78,7 +78,7 @@ public class ClientsImportBatchConfig {
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer(DelimitedLineTokenizer.DELIMITER_COMMA);
 
         lineTokenizer.setNames(
-                "firstName","lastName","email","phoneNumber","cin","month", "age", "annual_income", "monthly_inhand_salary", "total_emi_per_month",
+                "firstName","lastName","email","phoneNumber","cin","customer_id","ssn","month", "age", "annual_income", "monthly_inhand_salary", "total_emi_per_month",
                 "num_bank_accounts", "num_credit_card", "interest_rate", "num_of_loan",
                 "delay_from_due_date", "num_of_delayed_payment", "changed_credit_limit",
                 "num_credit_inquiries", "credit_mix", "outstanding_debt",
@@ -91,7 +91,7 @@ public class ClientsImportBatchConfig {
                 "occupation_Doctor", "occupation_Engineer", "occupation_Entrepreneur",
                 "occupation_Journalist", "occupation_Lawyer", "occupation_Manager",
                 "occupation_Mechanic", "occupation_Media_Manager", "occupation_Musician",
-                "occupation_Scientist", "occupation_Teacher", "occupation_Writer"
+                "occupation_Scientist", "occupation_Teacher", "occupation_Writer","credit_score"
         );
 
         lineTokenizer.setStrict(false);

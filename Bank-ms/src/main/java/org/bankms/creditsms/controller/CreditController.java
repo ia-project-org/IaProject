@@ -18,9 +18,6 @@ public class CreditController {
 
     private final CreditService creditService;
 
-    //private final JobLauncher jobLauncher;
-
-    //private final Job rubJob;
 
     @GetMapping
     public ResponseEntity<Page<Credit>> getcredits(@RequestParam(defaultValue = "0") int page,

@@ -1,6 +1,5 @@
-package org.eligibilityms.btach_processing;
+package org.eligibilityms.btach_processing.Reader;
 
-import lombok.RequiredArgsConstructor;
 import org.eligibilityms.dto.ClientDetailsDto;
 import org.eligibilityms.proxy.BankMsProxy;
 import org.springframework.batch.item.ItemReader;

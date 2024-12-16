@@ -1,6 +1,7 @@
 package org.bankms.clientsms.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,141 +14,176 @@ public class ClientCsvRecord {
     private String phoneNumber;
     private String cin;
 
+    @JsonProperty("customer_id")
+    
+    private String customerId;
+
+    @JsonProperty("ssn")
+    
+    private String ssn;
+
     @JsonProperty("month")
-    private Integer month;
+    
+    private Long month; // Updated to int64
 
     @JsonProperty("age")
-    private Integer age;
+    
+    private Long age; // Updated to int64
 
     @JsonProperty("annual_income")
-    private Double annualIncome;
+    
+    private Double annualIncome; // Updated to float64
 
     @JsonProperty("monthly_inhand_salary")
-    private Double monthlyInhandSalary;
+    
+    private Double monthlyInhandSalary; // Updated to float64
 
     @JsonProperty("total_emi_per_month")
-    private Double totalEmiPerMonth;
+    
+    private Double totalEmiPerMonth; // Updated to float64
 
     @JsonProperty("num_bank_accounts")
-    private Integer numBankAccounts;
+    
+    private Long numBankAccounts; // Updated to int64
 
     @JsonProperty("num_credit_card")
-    private Integer numCreditCard;
+    
+    private Long numCreditCard; // Updated to int64
 
     @JsonProperty("interest_rate")
-    private Double interestRate;
+    
+    private Long interestRate; // Updated to int64
 
     @JsonProperty("num_of_loan")
-    private Integer numOfLoan;
+    
+    private Long numOfLoan; // Updated to int64
 
     @JsonProperty("delay_from_due_date")
-    private Integer delayFromDueDate;
+    
+    private Long delayFromDueDate; // Updated to int64
 
     @JsonProperty("num_of_delayed_payment")
-    private Integer numOfDelayedPayment;
+    
+    private Long numOfDelayedPayment; // Updated to int64
 
     @JsonProperty("changed_credit_limit")
-    private Double changedCreditLimit;
+    
+    private Double changedCreditLimit; // Updated to float64
 
     @JsonProperty("num_credit_inquiries")
-    private Integer numCreditInquiries;
+    
+    private Long numCreditInquiries; // Updated to int64
 
     @JsonProperty("credit_mix")
-    private String creditMix;
+    
+    private Long creditMix; // Updated to int64
 
     @JsonProperty("outstanding_debt")
-    private Double outstandingDebt;
+    
+    private Double outstandingDebt; // Updated to float64
 
     @JsonProperty("credit_utilization_ratio")
-    private Double creditUtilizationRatio;
+    
+    private Double creditUtilizationRatio; // Updated to float64
 
     @JsonProperty("credit_history_age")
-    private Integer creditHistoryAge;
+    
+    private Long creditHistoryAge; // Updated to int64
 
     @JsonProperty("payment_of_min_amount")
-    private String paymentOfMinAmount;
+    
+    private Long paymentOfMinAmount; // Updated to int64
 
     @JsonProperty("amount_invested_monthly")
-    private Double amountInvestedMonthly;
+    
+    private Double amountInvestedMonthly; // Updated to float64
 
     @JsonProperty("payment_behaviour")
-    private Integer paymentBehaviour;
+    
+    private Long paymentBehaviour; // Updated to int64
 
     @JsonProperty("monthly_balance")
-    private Double monthlyBalance;
+    
+    private Double monthlyBalance; // Updated to float64
 
     @JsonProperty("auto_loan")
-    private Integer autoLoan;
+    private Long autoLoan; // Updated to bool
 
     @JsonProperty("credit_builder_loan")
-    private Integer creditBuilderLoan;
+    private Long creditBuilderLoan; // Updated to int64
 
     @JsonProperty("debt_consolidation_loan")
-    private Integer debtConsolidationLoan;
+    private Long debtConsolidationLoan; // Updated to int64
 
     @JsonProperty("home_equity_loan")
-    private Integer homeEquityLoan;
+    private Long homeEquityLoan; // Updated to bool
 
     @JsonProperty("mortgage_loan")
-    private Integer mortgageLoan;
+    private Long mortgageLoan; // Updated to int64
 
     @JsonProperty("no_loan")
-    private Integer noLoan;
+    private Integer noLoan; // Updated to bool
 
     @JsonProperty("not_specified")
-    private Integer notSpecified;
+    private Long notSpecified; // Updated to int64
 
     @JsonProperty("payday_loan")
-    private Integer paydayLoan;
+    private Long paydayLoan; // Updated to int64
 
     @JsonProperty("personal_loan")
-    private Integer personalLoan;
+    private Long personalLoan; // Updated to int64
 
     @JsonProperty("student_loan")
-    private Integer studentLoan;
+    private Long studentLoan; // Updated to int64
 
     @JsonProperty("occupation_Accountant")
-    private Integer occupationAccountant;
+    private Integer occupationAccountant; // Updated to bool
 
     @JsonProperty("occupation_Architect")
-    private Integer occupationArchitect;
+    private Integer occupationArchitect; // Updated to bool
 
     @JsonProperty("occupation_Developer")
-    private Integer occupationDeveloper;
+    private Integer occupationDeveloper; // Updated to bool
 
     @JsonProperty("occupation_Doctor")
-    private Integer occupationDoctor;
+    private Integer occupationDoctor; // Updated to bool
 
     @JsonProperty("occupation_Engineer")
-    private Integer occupationEngineer;
+    private Integer occupationEngineer; // Updated to bool
 
     @JsonProperty("occupation_Entrepreneur")
-    private Integer occupationEntrepreneur;
+    private Integer occupationEntrepreneur; // Updated to bool
 
     @JsonProperty("occupation_Journalist")
-    private Integer occupationJournalist;
+    private Integer occupationJournalist; // Updated to bool
 
     @JsonProperty("occupation_Lawyer")
-    private Integer occupationLawyer;
+    private Integer occupationLawyer; // Updated to bool
 
     @JsonProperty("occupation_Manager")
-    private Integer occupationManager;
+    private Integer occupationManager; // Updated to bool
 
     @JsonProperty("occupation_Mechanic")
-    private Integer occupationMechanic;
+    private Integer occupationMechanic; // Updated to bool
 
     @JsonProperty("occupation_Media_Manager")
-    private Integer occupationMediaManager;
+    private Integer occupationMediaManager; // Updated to bool
 
     @JsonProperty("occupation_Musician")
-    private Integer occupationMusician;
+    private Integer occupationMusician; // Updated to bool
 
     @JsonProperty("occupation_Scientist")
-    private Integer occupationScientist;
+    private Integer occupationScientist; // Updated to bool
 
     @JsonProperty("occupation_Teacher")
-    private Integer occupationTeacher;
+    private Integer occupationTeacher; // Updated to bool
 
     @JsonProperty("occupation_Writer")
-    private Integer occupationWriter;
+    private Integer occupationWriter; // Updated to bool
+
+    @JsonProperty("credit_score")
+    
+    private String creditScore; // Updated to int64
+
+
 }
